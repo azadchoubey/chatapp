@@ -6,7 +6,7 @@ document.getElementById('chatroom').addEventListener('click', (e) => {
     if (chatroom == '') {
         alert("Please enter room name");
     } else {
-        fetch("http://localhost/project/chat/admin/chatroom.php", {
+        fetch("http://localhost/pro/chat/admin/chatroom.php", {
             method: "POST",
             header: {
                 'Content-type': 'application/json'
@@ -15,11 +15,11 @@ document.getElementById('chatroom').addEventListener('click', (e) => {
                 "data": chatroom
             })
         }).then((response) => {
-            return response.text();
+            return response.json();
         }).then((data) => {
             console.log(data);
         }).catch((error) => {
-            console.log(error)
+            console.log(error);
         })
     }
 
