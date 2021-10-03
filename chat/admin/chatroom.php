@@ -1,22 +1,35 @@
-<?php 
-header("Access-Control-Allow-Origin:*");
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
-$_POST = json_decode(file_get_contents('php://input'), true);
-        if(isset($_POST['data'])){
+<?php session_start( );
+require("db.php");
+$obj=new dbconnect();
+header("Access-Control-Allow-Origin: *"); 
+     if(isset($_POST['room'])){
+        
+        $return= $obj->checkroom($_POST['room']);
+        $checkdata = json_decode($return, true);
+          if($checkdata['code'] =="1"){
+            $_SESSION['roomname']=$checkdata['msg'];
+                header('Location:chat.php');
+          }else{
+            echo ' <script> var  confirmation= confirm("'. $checkdata['msg'] .'");
+            if(confirmation==true){
+                window.location.href = "index.php";               
+             }else{
+              window.location.href = "index.php";    }
+        </script>' ;
+                    }
+          }elseif(isset($_POST['msg']) && isset($_POST['ip']) && isset($_POST['room'])){
           require("db.php");
           $obj=new dbconnect();
-        $return=  $obj->checkroom($_POST['data']);
+          $return= $obj->insert($_POST['msg'],$_POST['ip'],$_POST['room']);
+          
+          echo $return;    
 
-          echo json_encode($return);
-     
-           
-        }else{
-            echo json_encode("parameter missing"); 
+        }
+        else{
+            print_r($_POST);
         }
 
-}else{
-    echo json_encode("opretaion failed ");
-}
+
 
 
 ?>  
