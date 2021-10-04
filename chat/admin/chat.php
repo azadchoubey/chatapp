@@ -1,6 +1,9 @@
-<?php session_start();?>
+<?php session_start();
+
+if(isset($_SESSION['roomname'])){
+?>
 <!DOCTYPE html>
-<html lang="en" class="h-100">
+<html lang="en" class="h-100">  
 
 <head>
     <meta charset="utf-8" />
@@ -13,7 +16,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="icon" href="http://www.w3.org/2000/svg" sizes="180x180" />
     <!-- Custom styles for this template -->
-    <link href="https://localhost/pro/chat/css/chat.css" rel="stylesheet" />
+    <link href="https://localhost/project/chat/css/chat.css" rel="stylesheet" />
 </head>
 
 <body class="d-flex h-100 text-center text-white bg-dark">
@@ -27,7 +30,7 @@
                     <a class="nav-link" href="#">Features</a>
                     <a class="nav-link" href="#">Contact</a>
                     <?php if(isset($_SESSION['roomname'])){
-                        echo '<a class="nav-link" href="https://localhost/pro/chat/admin/logout.php">Logout</a>';
+                        echo '<a class="nav-link" href="https://localhost/project/chat/admin/logout.php">Logout</a>';
                 }?>
                 </nav>
             </div>
@@ -57,7 +60,11 @@
         var ip = "<?php echo $_SERVER['REMOTE_ADDR'];?>"; 
 
     </script>
-    <script src="https://localhost/pro/chat/js/chat.js"></script>
+    <script src="https://localhost/project/chat/js/chat.js"></script>
 </body>
 
 </html>
+<?php }else{
+                header('Location:index.php');
+
+} ?>

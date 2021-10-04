@@ -8,18 +8,21 @@ header("Access-Control-Allow-Origin: *");
         $checkdata = json_decode($return, true);
           if($checkdata['code'] =="1"){
             $_SESSION['roomname']=$checkdata['msg'];
+           $table= $obj->create_table($checkdata['msg']);
                 header('Location:chat.php');
+
           }else{
             echo ' <script> var  confirmation= confirm("'. $checkdata['msg'] .'");
             if(confirmation==true){
-                window.location.href = "index.php";               
-             }else{
+                window.location.href = "chat.php";';   
+                $_SESSION['roomname']=$_POST['room'];
+            echo ' }else{
               window.location.href = "index.php";    }
         </script>' ;
                     }
           }elseif(isset($_POST['msg']) && isset($_POST['ip']) && isset($_POST['room'])){
           require("db.php");
-          $obj=new dbconnect();
+    
           $return= $obj->insert($_POST['msg'],$_POST['ip'],$_POST['room']);
           
           echo $return;    

@@ -1,11 +1,6 @@
 <?php session_start();
-if(isset($_SESSION['roomname'])){
-    echo "<script> var  confirmation= confirm('Already Room " . $_SESSION["roomname"] ." is active you want to continue this room ?');
-    if(confirmation==true){
-        window.location.href = 'chat.php';               
-     }
-</script>" ;
-} ?>
+
+ ?>
 <!doctype html>
 <html lang="en" class="h-100">
 
@@ -37,7 +32,7 @@ if(isset($_SESSION['roomname'])){
         }
     </style>
     <!-- Custom styles for this template -->
-    <link href="https://localhost/pro/chat/css/cover.css" rel="stylesheet">
+    <link href="https://localhost/project/chat/css/cover.css" rel="stylesheet">
 </head>
 
 <body class="d-flex h-100 text-center text-white bg-dark">
@@ -49,9 +44,6 @@ if(isset($_SESSION['roomname'])){
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                     <a class="nav-link" href="#">Features</a>
                     <a class="nav-link" href="#">Contact</a>
-                    <?php if(isset($_SESSION['roomname'])){
-                        echo '<a class="nav-link" href="https://localhost/pro/chat/admin/logout.php">Logout</a>';
-                }?>
                 </nav>
             </div>
         </header>
