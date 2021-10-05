@@ -2,15 +2,15 @@
 require("db.php");
 $obj=new dbconnect();
 header("Access-Control-Allow-Origin: *"); 
-     if(isset($_POST['room'])){
-        
+     if(isset($_POST['room']) && $_POST['from']){
         $return= $obj->checkroom($_POST['room']);
         $checkdata = json_decode($return, true);
+        print_r($checkdata);
+
           if($checkdata['code'] =="1"){
             $_SESSION['roomname']=$checkdata['msg'];
-           $table= $obj->create_table($checkdata['msg']);
+           $obj->create_table($checkdata['msg'],$_POST['from']);
                 header('Location:chat.php');
-
           }else{
             echo ' <script> var  confirmation= confirm("'. $checkdata['msg'] .'");
             if(confirmation==true){
@@ -23,7 +23,7 @@ header("Access-Control-Allow-Origin: *");
           }elseif(isset($_POST['msg']) && isset($_POST['ip']) && isset($_POST['room'])){
           require("db.php");
     
-          $return= $obj->insert($_POST['msg'],$_POST['ip'],$_POST['room']);
+          $return= $obj->insert($_POST['msg'],$_POST['to'],$_POST['from'],$_SESSION['roomname']);
           
           echo $return;    
 

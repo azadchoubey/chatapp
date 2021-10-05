@@ -16,7 +16,7 @@ if(isset($_SESSION['roomname'])){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="icon" href="http://www.w3.org/2000/svg" sizes="180x180" />
     <!-- Custom styles for this template -->
-    <link href="https://localhost/project/chat/css/chat.css" rel="stylesheet" />
+    <link href="http://localhost/project/chat/css/chat.css" rel="stylesheet" />
 </head>
 
 <body class="d-flex h-100 text-center text-white bg-dark">
@@ -57,10 +57,10 @@ if(isset($_SESSION['roomname'])){
         </footer>
     </div>
    <script>var room= "<?php echo $_SESSION['roomname'];?>"; 
-        var ip = "<?php echo $_SERVER['REMOTE_ADDR'];?>"; 
+        var to = ""; 
 
     </script>
-    <script src="https://localhost/project/chat/js/chat.js"></script>
+    <script src="https://localhost/projectject/chat/js/chat.js"></script>
 </body>
 
 </html>

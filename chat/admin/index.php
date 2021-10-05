@@ -32,7 +32,7 @@
         }
     </style>
     <!-- Custom styles for this template -->
-    <link href="https://localhost/project/chat/css/cover.css" rel="stylesheet">
+    <link href="http://localhost/project/chat/css/cover.css" rel="stylesheet">
 </head>
 
 <body class="d-flex h-100 text-center text-white bg-dark">
@@ -53,6 +53,7 @@
             <p class="lead"> Fun with your friends like chat and much more .</p>
             <form method="post" action="chatroom.php">
                 <input class="form-control  mb-3 " type="text" name="room" placeholder=" Enter Room Name " required>
+                <input class="form-control  mb-3 " type="text" name="from" placeholder=" Your Name " required>
                 <input type="submit" class="btn btn-lg btn-secondary fw-bold border-white bg-white " value="Join Chat Room">
             </form>
             </p>

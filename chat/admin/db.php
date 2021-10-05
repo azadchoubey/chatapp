@@ -24,10 +24,10 @@ class dbconnect{
         }
         $con=null;
      }   
-     public function insert($msg,$room,$ip){
+     public function insert($msg,$from,$to,$table){
             try{
                 $con= new PDO("mysql:host=localhost;dbname=chat",'root','');
-                $sql=$con->prepare("INSERT INTO messages (Sno,msg,room,ip,datetime) VALUES (null,'$msg','$room','$ip',current_timestamp)");
+                $sql=$con->prepare("INSERT INTO messages (Sno,msg,from,to,time) VALUES (null,'$msg','$from','$to',current_timestamp)");
                 $sql->execute();
                 if($sql->rowCount()>0){
                     $result=$sql->fetchAll(PDO::FETCH_OBJ);
@@ -39,26 +39,26 @@ class dbconnect{
 
             }
     }
-    public function create_table($roomname){
+    public function create_table($roomname,$from){
         try{
             $con= new PDO("mysql:host=localhost;dbname=chat",'root','');
-            $sql=$con->prepare("CREATE TABLE $roomname  ( `Sno` INT NOT NULL AUTO_INCREMENT , `msg` TEXT NOT NULL , `from` VARCHAR(30) NOT NULL , `to` VARCHAR(30) NOT NULL , `time` TIMESTAMP NOT NULL , PRIMARY KEY (`Sno`)) ENGINE = InnoDB;)");
+            $sql=$con->prepare("CREATE TABLE `$roomname` ( `Sno` INT NULL AUTO_INCREMENT , `msg` TEXT NULL , `frm` VARCHAR(30) NULL , `too` VARCHAR(30) NULL , `time` TIMESTAMP NOT NULL , PRIMARY KEY (`Sno`)) ENGINE = InnoDB;");
             $sql->execute();
-            if($sql->rowCount()>0){
-                $result=$sql->fetchAll(PDO::FETCH_OBJ);
-                return json_encode($result);
-            }else{
-                return json_encode(['code'=>2,'msg'=>"try again"]);
-            }
+            $sql->closeCursor();
+            $fromin= $con->prepare("INSERT INTO `$roomname` (`Sno`, `msg`, `frm`, `too`, `time`) VALUES (null,' ','$from',' ',current_timestamp)");
+            $fromin->execute();
+            $result= $con->lastInsertId();
+            echo $result;
         }catch(PDOException $e){
-            return json_encode($e->getMessage());
+            echo $e->getMessage();
         }
+    }
+
+
     }
 
 
 
 
-
-}
     
 ?>
