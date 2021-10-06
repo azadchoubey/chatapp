@@ -1,5 +1,7 @@
 <?php session_start();
-
+    if(isset($_SESSION['roomname'])){
+        print_r($_SESSION['roomname']);
+    }
  ?>
 <!doctype html>
 <html lang="en" class="h-100">

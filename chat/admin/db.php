@@ -48,12 +48,22 @@ class dbconnect{
             $fromin= $con->prepare("INSERT INTO `$roomname` (`Sno`, `msg`, `frm`, `too`, `time`) VALUES (null,' ','$from',' ',current_timestamp)");
             $fromin->execute();
             $result= $con->lastInsertId();
-            echo $result;
+            echo json_encode(['code'=>4,'message' =>$result]);
         }catch(PDOException $e){
             echo $e->getMessage();
         }
     }
-
+    public function insert_user($roomname,$from){
+        try{
+            $con= new PDO("mysql:host=localhost;dbname=chat",'root','');
+            $fromin= $con->prepare("INSERT INTO `$roomname` (`Sno`, `msg`, `frm`, `too`, `time`) VALUES (null,' ','$from',' ',current_timestamp)");
+            $fromin->execute();
+            $id=$con->lastInsertId();
+            return json_encode(['code'=>4,'message' =>$id]);
+        }catch(PDOException $e){
+            echo $e->getMessage();
+        }
+    }
 
     }
 

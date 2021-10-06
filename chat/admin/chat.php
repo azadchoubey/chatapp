@@ -1,6 +1,7 @@
 <?php session_start();
 
 if(isset($_SESSION['roomname'])){
+    
 ?>
 <!DOCTYPE html>
 <html lang="en" class="h-100">  
