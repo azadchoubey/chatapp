@@ -1,7 +1,22 @@
 <?php session_start();
 
 if(isset($_SESSION['roomname'])){
-    
+    $roomname=$_SESSION['roomname'];
+   echo $user=$_SESSION['user'];
+    try{
+        $con= new PDO("mysql:host=localhost;dbname=chat",'root','');
+        $query= $con->prepare("SELECT frm FROM $roomname WHERE status = 1");
+        $query->execute();
+        $result=$query->fetchAll(PDO::FETCH_ASSOC);
+    }catch(PDOException $e){
+        echo $e->getMessage();
+    }
+    if($result[0]['frm']==$user){
+        echo " <script> var to='".$result[1]['frm']."'</script>";
+    }else{
+        echo " <script> var to='".$result[0]['frm']."'</script>";
+    }   
+
 ?>
 <!DOCTYPE html>
 <html lang="en" class="h-100">  
@@ -17,7 +32,7 @@ if(isset($_SESSION['roomname'])){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="icon" href="http://www.w3.org/2000/svg" sizes="180x180" />
     <!-- Custom styles for this template -->
-    <link href="http://localhost/project/chat/css/chat.css" rel="stylesheet" />
+    <link href="https://localhost/project/chat/css/chat.css" rel="stylesheet" />
 </head>
 
 <body class="d-flex h-100 text-center text-white bg-dark">
@@ -42,7 +57,7 @@ if(isset($_SESSION['roomname'])){
             <div class="container">
                 <div class="roomclass">
                     <img src="/w3images/bandmember.jpg" alt="Avatar" style="width: 100%" />
-                    <p>Hello. How are you today?</p>
+                    <p></p>
                     <span class="time-right">11:00</span>
                 </div>
             </div>
@@ -58,10 +73,10 @@ if(isset($_SESSION['roomname'])){
         </footer>
     </div>
    <script>var room= "<?php echo $_SESSION['roomname'];?>"; 
-        var to = ""; 
+        var from = "<?php echo $user; ?>"; 
 
     </script>
-    <script src="https://localhost/projectject/chat/js/chat.js"></script>
+    <script src="https://localhost/project/chat/js/chat.js"></script>
 </body>
 
 </html>

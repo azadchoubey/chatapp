@@ -1,10 +1,10 @@
 <?php
 
-          header("Access-Control-Allow-Origin: *"); 
+header("Access-Control-Allow-Origin: https://localhost/"); 
 session_start();
 if(isset($_SESSION['roomname'])){
   header('Location:chat.php');
-}
+}   
 require("db.php");
 $obj=new dbconnect();
      if(isset($_POST['room']) && $_POST['from']){
@@ -12,6 +12,7 @@ $obj=new dbconnect();
         $checkdata = json_decode($return, true);
           if($checkdata['code'] =="1"){
             $_SESSION['roomname']=$checkdata['msg'];
+            $_SESSION['user']=$_POST['from'];
            $obj->create_table($checkdata['msg'],$_POST['from']);
                 header('Location:chat.php');
           }else{
@@ -34,18 +35,18 @@ $obj=new dbconnect();
             var  form=new FormData();
            
             createFormData(form, 'data', dataform);
-            fetch('http://localhost/project/chat/admin/chatroom.php',{
-              mode: 'no-cors',
+            fetch('https://localhost/project/chat/admin/chatroom.php',{
+              mode: 'same-origin',
               method: 'POST',
               credentials:'include',
               body:form,
               header: {
-                  'Content-type': 'application/x-www-form-urlencoded',
+                  'Content-type': 'application/x-www-form-urlencoded'        
               },
                 }).then((response)=>{
                   return response.text();
               }).then((data)=>{
-                document.body.innerHTML = data ;
+               document.write(data);
               }).catch((error)=>{
                   console.log(error);
       
@@ -57,10 +58,10 @@ $obj=new dbconnect();
 
      
                     }
-          }elseif(isset($_POST['msg']) && isset($_POST['ip']) && isset($_POST['room'])){
+          }elseif(isset($_POST['sendmsg']['room']) && isset($_POST['sendmsg']['msg']) && isset($_POST['sendmsg']['from']) && isset($_POST['sendmsg']['to'])){
           require("db.php");
     
-          $return= $obj->insert($_POST['msg'],$_POST['to'],$_POST['from'],$_SESSION['roomname']);
+          $return= $obj->insert($_POST['sendmsg']['room'],$_POST['sendmsg']['msg'],$_POST['sendmsg']['msg'],$_POST['sendmsg']['from'],$_POST['sendmsg']['to']);
           
           echo $return;    
 
@@ -68,10 +69,10 @@ $obj=new dbconnect();
           
           $result=$obj->insert_user($_POST['data']['room'],$_POST['data']['from']); 
           $checkdata = json_decode($result, true);
-          echo $checkdata ;
+       
           if($checkdata['code']==4){
             $_SESSION['roomname']=$_POST['data']['room'];
-
+            $_SESSION['user']=$_POST['data']['from'];
              header('Location:chat.php');
           }else{
             echo "not found"; 
@@ -79,7 +80,9 @@ $obj=new dbconnect();
           
         }
         else{
+        
             print_r($_POST);
+            //    header('Location:index.php');
         }
 
 
